@@ -1,0 +1,219 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API - COMPAÑIA",
+    "description": "Esta API permite la gestión de compañías, incluyendo la creación de compañías, la obtención de información sobre compañías, y la asignación de juegos a las mismas.\n",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8003",
+      "description": "Servidor local para desarrollo"
+    }
+  ],
+  "paths": {
+    "/companies": {
+      "get": {
+        "summary": "Obtener todas las compañías",
+        "description": "Este endpoint permite obtener una lista de todas las compañías registradas.\n",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "apikey",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Clave API para autenticar la solicitud"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de compañías obtenida con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "registration_date": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "RUC": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "country_origin": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/companies/{id}": {
+      "get": {
+        "summary": "Obtener detalles de una compañía",
+        "description": "Este endpoint permite obtener los detalles de una compañía específica por su ID.\n",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID de la compañía"
+          },
+          {
+            "in": "header",
+            "name": "apikey",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Clave API para autenticar la solicitud"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalles de la compañía obtenidos con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "registration_date": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "RUC": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "country_origin": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/company": {
+      "post": {
+        "summary": "Crear una nueva compañía",
+        "description": "Este endpoint permite crear una nueva compañía proporcionando la información necesaria en el cuerpo de la solicitud.\n",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "apikey",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Clave API para autenticar la solicitud"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "registration_date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "RUC": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "country_origin": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Compañía creada con éxito"
+          }
+        }
+      }
+    },
+    "/company/{id}/addGame": {
+      "post": {
+        "summary": "Asignar un juego a una compañía",
+        "description": "Este endpoint permite asignar un juego a una compañía existente. El ID del juego debe proporcionarse en el cuerpo de la solicitud.\n",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID de la compañía"
+          },
+          {
+            "in": "header",
+            "name": "apikey",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Clave API para autenticar la solicitud"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "gameId": {
+                    "type": "integer",
+                    "description": "ID del juego a asignar"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Juego asignado con éxito"
+          }
+        }
+      }
+    }
+  }
+}

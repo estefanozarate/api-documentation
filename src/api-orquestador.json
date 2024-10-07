@@ -1,0 +1,172 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Api Orquestador",
+    "description": "La **Api Orquestador** es una API diseñada para gestionar la interacción entre diferentes servicios en una plataforma de videojuegos. Permite registrar nuevos usuarios, asignar roles o permisos, y gestionar juegos. \nEsta API está destinada a ser utilizada por desarrolladores que deseen integrar funcionalidades relacionadas con la gestión de usuarios y juegos en sus aplicaciones.\n\n### Funcionalidades Clave:\n- **Registro de usuarios:** Permite a los nuevos usuarios registrarse proporcionando información personal como nombre, apellidos, correo electrónico, contraseña y más.\n- **Asignación de roles:** Permite asignar roles o permisos a los usuarios registrados, facilitando la gestión de acceso a diferentes recursos.\n- **Consulta de juegos:** Facilita la consulta de información sobre juegos disponibles en la plataforma.\n",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8001"
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "summary": "Registrar un nuevo usuario",
+        "description": "Este endpoint permite registrar un nuevo usuario en la plataforma proporcionando información personal como nombre de usuario, nombres, apellidos, correo electrónico, contraseña, edad, número de teléfono y fecha de cumpleaños.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "names": {
+                    "type": "string"
+                  },
+                  "lastnames": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer"
+                  },
+                  "phone_number": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuario registrado con éxito"
+          },
+          "400": {
+            "description": "Error en la solicitud"
+          }
+        }
+      }
+    },
+    "/assign": {
+      "post": {
+        "summary": "Asignar roles o permisos a un usuario",
+        "description": "Este endpoint permite asignar roles o permisos a un usuario registrado en la plataforma. La información del usuario se proporciona en formato JSON.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Rol asignado con éxito"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          }
+        }
+      }
+    },
+    "/games": {
+      "get": {
+        "summary": "Obtener la lista de juegos",
+        "description": "Este endpoint permite obtener una lista de todos los juegos disponibles en la plataforma. Puede incluir detalles como nombre, categoría, y más.\n",
+        "responses": {
+          "200": {
+            "description": "Lista de juegos obtenida con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "releaseDate": {
+                        "type": "string",
+                        "format": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/{id}": {
+      "get": {
+        "summary": "Obtener información detallada de un juego",
+        "description": "Este endpoint permite obtener información detallada sobre un juego específico utilizando su ID único.\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID único del juego que deseas consultar.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Información del juego obtenida con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "releaseDate": {
+                      "type": "string",
+                      "format": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

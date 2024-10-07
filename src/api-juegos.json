@@ -1,0 +1,276 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API - JUEGOS",
+    "description": "Esta API, llamada **api-juegos**, permite la gestión completa de juegos y logros en una plataforma de videojuegos. \nCon esta API, los desarrolladores pueden listar, crear, actualizar y eliminar juegos.\n",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8002"
+    }
+  ],
+  "paths": {
+    "/games": {
+      "get": {
+        "summary": "Obtener lista de juegos",
+        "description": "Este endpoint permite obtener una lista completa de todos los juegos disponibles en la base de datos. La lista incluye detalles como el nombre del juego, la fecha de publicación, la categoría y el tamaño (en megabytes o gigabytes).\n",
+        "responses": {
+          "200": {
+            "description": "Lista de juegos obtenida con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "publicationDate": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "size": {
+                        "type": "integer"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Breve descripción del juego."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear un nuevo juego",
+        "description": "Este endpoint permite crear un nuevo juego en la base de datos proporcionando la información del juego, incluyendo el nombre, la fecha de publicación, la categoría y el tamaño. Los datos del juego se envían en formato JSON.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "publicationDate": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "size": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Juego creado con éxito"
+          }
+        }
+      }
+    },
+    "/games/{id}": {
+      "get": {
+        "summary": "Obtener detalles de un juego específico",
+        "description": "Este endpoint devuelve los detalles completos de un juego individual basado en su ID único. Puedes utilizar este endpoint para obtener más información sobre un juego específico, como su nombre, fecha de publicación, categoría y tamaño.\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID único del juego que deseas consultar.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Información del juego obtenida con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "publicationDate": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "size": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Actualizar un juego existente",
+        "description": "Este endpoint permite actualizar los detalles de un juego existente en la base de datos utilizando su ID único. Los campos que se pueden actualizar incluyen el nombre del juego, la fecha de publicación, la categoría y el tamaño.\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID único del juego que deseas actualizar.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "publicationDate": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "size": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Juego actualizado con éxito"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar un juego",
+        "description": "Este endpoint permite eliminar un juego existente en la base de datos utilizando su ID único. Una vez eliminado, el juego ya no estará disponible en la plataforma.\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID único del juego que deseas eliminar.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Juego eliminado con éxito"
+          }
+        }
+      }
+    },
+    "/achievements/create/{gameId}": {
+      "post": {
+        "summary": "Crear un nuevo logro para un juego específico",
+        "description": "Este endpoint permite la creación de un nuevo logro asociado a un juego. El logro incluye un nombre y un nivel de rareza. Cada logro creado se puede asignar posteriormente a usuarios.\n",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "description": "ID del juego al que deseas asociar el nuevo logro.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "rarity": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Logro creado con éxito"
+          }
+        }
+      }
+    },
+    "/achievements/{achievementId}/assign": {
+      "post": {
+        "summary": "Asignar un logro a un usuario",
+        "description": "Este endpoint permite asignar un logro específico a un usuario proporcionando el ID del logro y el ID del usuario. Esto permite que los usuarios acumulen logros en la plataforma.\n",
+        "parameters": [
+          {
+            "name": "achievementId",
+            "in": "path",
+            "required": true,
+            "description": "ID del logro que deseas asignar.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "description": "ID del usuario al que deseas asignar el logro."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logro asignado con éxito"
+          }
+        }
+      }
+    }
+  }
+}

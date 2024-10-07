@@ -1,0 +1,280 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "api-user",
+    "description": "API para manejar usuarios",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000",
+      "description": "Servidor local"
+    }
+  ],
+  "paths": {
+    "/user/auth/login": {
+      "post": {
+        "summary": "Iniciar sesión de usuario",
+        "operationId": "authLogin",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "prueba@gmail.com",
+                  "password": "123"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "apikey",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inicio de sesión exitoso"
+          },
+          "401": {
+            "description": "Credenciales inválidas"
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "summary": "Obtener información de un usuario",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 17
+          },
+          {
+            "name": "apikey",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Información del usuario obtenida"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar un usuario",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 17
+          },
+          {
+            "name": "apikey",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario eliminado correctamente"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Actualizar información de un usuario",
+        "operationId": "updateUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "names": {
+                    "type": "string"
+                  },
+                  "lastnames": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer"
+                  },
+                  "phone_number": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                },
+                "example": {
+                  "username": "Prueba1",
+                  "names": "Prueba",
+                  "lastnames": "Pruebas",
+                  "email": "prueba@gmail.com",
+                  "password": "123",
+                  "age": 13,
+                  "phone_number": "123456789",
+                  "birthday": "2024-10-10"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 17
+          },
+          {
+            "name": "apikey",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario actualizado correctamente"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          }
+        }
+      }
+    },
+    "/user/auth/signup": {
+      "post": {
+        "summary": "Registrar un nuevo usuario",
+        "operationId": "registerUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "names": {
+                    "type": "string"
+                  },
+                  "lastnames": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer"
+                  },
+                  "phone_number": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                },
+                "example": {
+                  "username": "Prueba",
+                  "names": "Prueba",
+                  "lastnames": "Pruebas",
+                  "email": "prueba@gmail.com",
+                  "password": "123",
+                  "age": 13,
+                  "phone_number": "123456789",
+                  "birthday": "2024-10-10"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "apikey",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuario registrado correctamente"
+          },
+          "400": {
+            "description": "Error en el registro"
+          }
+        }
+      }
+    }
+  }
+}
